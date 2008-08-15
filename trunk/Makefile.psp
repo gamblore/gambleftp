@@ -1,0 +1,22 @@
+TARGET = ftpserver
+OBJS = psp_wifi.o server.o ftp.o parser.o ftpcmd.o filelist.o clientcmd.o font.c psp_text.o psp_util.o
+
+PRX_EXPORTS=exports.exp
+
+INCDIR = 
+CFLAGS = -O0 -G0 -Wall -g -D__PSP__
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+LIBDIR =
+LIBS = -lpspwlan -lpspgum -lpspgu -lpsppower -lpspnet_adhoc -lpspnet_adhocctl -lpspnet_adhocmatching -lm
+
+BUILD_PRX = 1
+PSP_FW_VERSION = 371
+
+EXTRA_TARGETS = EBOOT.PBP
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+
+font.c : font.raw
+	bin2c font.raw font.c font
